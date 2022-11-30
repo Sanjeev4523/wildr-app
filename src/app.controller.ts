@@ -2,6 +2,7 @@ import { Controller, Get, Request, Post, UseGuards, Body } from '@nestjs/common'
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { TUser } from './users/users.service';
+import { User } from './users/user.entity';
 
 type TLoginReq = {
   email: string;
@@ -16,6 +17,14 @@ export class AppController {
     // todo: hash password
     return this.authService.login(loginReq.email, loginReq.password);
   }
+
+  @Post('auth/register')
+  async register(@Body() registerUser: User) {
+    // todo: hash password
+    const newUser = await this.authService.register(registerUser);
+    return this.authService.login(newUser.email, newUser.passwordHash);
+  }
+
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')

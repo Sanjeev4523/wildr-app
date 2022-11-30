@@ -18,7 +18,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "docker:pgsql": "docker run -d --rm -e POSTGRES_USER=pg -e POSTGRES_PASSWORD=password -p 5432:5432 -v /data:/var/lib/postgresql/data --name pgsql postgres",
+    "docker:pg-admin": "docker run --name pgadmin -p 5050:80 -e \"PGADMIN_DEFAULT_EMAIL=user@example.com\" -e \"PGADMIN_DEFAULT_PASSWORD=password\" -d --rm dpage/pgadmin4"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -26,12 +28,15 @@
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/typeorm": "^9.0.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.3.10"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

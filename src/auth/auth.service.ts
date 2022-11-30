@@ -1,7 +1,8 @@
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { TUserProfile, TUser, UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -29,6 +30,13 @@ export class AuthService {
       };
     }
     throw new UnauthorizedException();
-    
+  }
+
+  async register(user: User): Promise<User>{
+    const existingUser = await this.usersService.findByEmail(user.email);
+    if(existingUser){
+      throw new BadRequestException();
+    }
+    return this.usersService.createUser(user);
   }
 }
