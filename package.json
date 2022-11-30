@@ -20,7 +20,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:pgsql": "docker run -d --rm -e POSTGRES_USER=pg -e POSTGRES_PASSWORD=password -p 5432:5432 -v /data:/var/lib/postgresql/data --name pgsql postgres",
-    "docker:pg-admin": "docker run --name pgadmin -p 5050:80 -e \"PGADMIN_DEFAULT_EMAIL=user@example.com\" -e \"PGADMIN_DEFAULT_PASSWORD=password\" -d --rm dpage/pgadmin4"
+    "docker:pg-admin": "docker run --name pgadmin -p 5050:80 -e \"PGADMIN_DEFAULT_EMAIL=user@example.com\" -e \"PGADMIN_DEFAULT_PASSWORD=password\" -d --rm dpage/pgadmin4",
+    "docker:cleanup": "docker stop pgsql pgadmin"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
