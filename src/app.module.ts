@@ -9,6 +9,7 @@ import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 import { PaymentsModule } from './payments/payments.module';
 import { PaymentsService } from './payments/payments.service';
+import { Payment } from './payments/payment.entity';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { PaymentsService } from './payments/payments.service';
         username: configService.get<string>('DB_USER', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', 'postgres'),    
         database: configService.get<string>('DB_NAME', 'test'),
-        entities: [User],
+        entities: [User, Payment],
         synchronize: true, // todo: remove for prod...
       }),
     }),
@@ -36,6 +37,6 @@ import { PaymentsService } from './payments/payments.service';
     PaymentsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PaymentsService],
+  providers: [AppService],
 })
 export class AppModule {}

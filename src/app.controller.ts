@@ -29,15 +29,23 @@ export class AppController {
     return this.authService.login(newUser.email, newUser.passwordHash);
   }
 
-  @Post('payments/checkout')
-  async paymentCheckout(@Body() checkoutReq: TCheckoutReq) {
-    return this.paymentService.createCheckoutSessionUrl(checkoutReq.cart);
-  }
-
-
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req: any) { //todo: type this / make infer work
     return req.user;
   }
+
+  @Post('payments/checkout')
+  @UseGuards(JwtAuthGuard)
+  async paymentCheckout(@Request() req: any, @Body() checkoutReq: TCheckoutReq) {
+    return this.paymentService.createCheckoutSessionUrl(checkoutReq.cart, req.user);
+  }
+
+  @Post('payments/webhook')
+  async stripeWebhook(@Body() event: any) {
+    // todo: check for stripe signature
+    this.paymentService.handleEvent(event);
+    return event;
+  }
+  
 }
