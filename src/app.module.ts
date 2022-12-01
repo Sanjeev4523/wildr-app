@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
+import { PaymentsModule } from './payments/payments.module';
+import { PaymentsService } from './payments/payments.service';
 
 @Module({
   imports: [
@@ -31,8 +33,9 @@ import { UsersModule } from './users/users.module';
     }),
     AuthModule,
     UsersModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PaymentsService],
 })
 export class AppModule {}
