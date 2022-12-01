@@ -1,6 +1,6 @@
 
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { TUserProfile, TUser, UsersService } from '../users/users.service';
+import { TUserProfile, UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/user.entity';
 
