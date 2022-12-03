@@ -21,8 +21,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:pgsql": "docker run -d --rm -e POSTGRES_USER=pg -e POSTGRES_PASSWORD=password -p 5432:5432 -v /data:/var/lib/postgresql/data --name pgsql postgres",
     "docker:pg-admin": "docker run --name pgadmin -p 5050:80 -e \"PGADMIN_DEFAULT_EMAIL=user@example.com\" -e \"PGADMIN_DEFAULT_PASSWORD=password\" -d --rm dpage/pgadmin4",
-    "docker:init":"npm run docker:pgsql && npm run docker:pg-admin",
-    "docker:cleanup": "docker stop pgsql pgadmin"
+    "docker:init": "npm run docker:pgsql && npm run docker:pg-admin",
+    "docker:cleanup": "docker stop pgsql pgadmin",
+    "ngrok": "ngrok http 3000"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -39,6 +40,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "stripe": "^11.1.0",
     "typeorm": "^0.3.10"
   },
   "devDependencies": {
