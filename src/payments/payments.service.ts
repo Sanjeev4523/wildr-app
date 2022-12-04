@@ -99,6 +99,7 @@ export class PaymentsService {
   async handleEvent(event: any) {
     switch (event.type) {
       case 'checkout.session.async_payment_failed':
+        // todo: same as checkout.session.complete , create helper function and pass payment status. 
         console.log('checkout.session.async_payment_failed');
         break;
       case 'checkout.session.async_payment_succeeded':
