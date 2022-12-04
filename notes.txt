@@ -1,5 +1,5 @@
 host.docker.internal
-docker run --rm -it stripe/stripe-cli listen --forward-to localhost:3000/payments/webhook --api-key sk_test_51M9vUsSB8KdwIjzHwJyQOfoZIs2iDfRXx7Weim4U0nFPnKDioGfYDWWf296LeUaRj2lMe3SajndHfpw47XsFxAXC00DVtCJoUB
+docker run --rm -it stripe/stripe-cli listen --forward-to localhost:3000/payments/webhook --api-key sk_test_51M9vUsSB8KdwIjzHwJyQOfoZIs2iDfRXdskjcnsdkcfYDWWf296LeUaRj2lMe3SajndHfpw47XsFxAXC00DVtCJoUB
 
 https://dashboard.stripe.com/test/webhooks/we_1MAGIkSB8KdwIjzHOmOo8SBu
 
