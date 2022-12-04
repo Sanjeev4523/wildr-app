@@ -23,8 +23,12 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
+Wildr Assignment -> Basic JWT Based authentication, stripe integration
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Pre-requisites:
+1. NodeJS
+2. Docker
+
 
 ## Installation
 
@@ -34,18 +38,36 @@ $ npm install
 
 ## Running the app
 
+### Local Development (using docker and ngrok)
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run docker:init # Starts docker postgresql and pgadmin
 ```
 
-## Test
+Note: Make sure the database configured in .env file exists. ( use pgadmin for this)
+
+```bash
+# Create a .env file for secrets. Sample ENV Looks like:
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=pg
+DB_PASSWORD=password
+DB_NAME=test
+STRIPE_KEY=<YOUR_STRIPE_KEY>
+JWT_SECRET=secret
+```
+
+```bash
+npm run start:dev # watch mode
+```
+
+```bash
+# ngrok for webhook configuration
+ngrok http 3000
+```
+
+Note: You need to add the ngrok endpoint to Stripe Webhooks. 
+
+## Test ( Not implemented )
 
 ```bash
 # unit tests

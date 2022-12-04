@@ -18,20 +18,22 @@ export class AppController {
 
   @Post('auth/login')
   async login(@Body() loginReq: TLoginReq) {
-    // todo: hash password
+    // todo: hash password using bcrypt
     return this.authService.login(loginReq.email, loginReq.password);
   }
 
   @Post('auth/register')
   async register(@Body() registerUser: User) {
-    // todo: hash password
+    // todo: hash password using bcrypt
     const newUser = await this.authService.register(registerUser);
     return this.authService.login(newUser.email, newUser.passwordHash);
   }
 
+  
+  // todo: rbac goes here, req.user should be accessible via a custom decorator.
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req: any) { //todo: type this / make infer work
+  getProfile(@Request() req: any) { //todo: type this / make infer user
     return req.user;
   }
 
@@ -43,7 +45,7 @@ export class AppController {
 
   @Post('payments/webhook')
   async stripeWebhook(@Body() event: any) {
-    // todo: check for stripe signature
+    // todo: check for stripe signature ( needs access to raw request data and not bodyparsed json. Find a way to get this via NESTJS)
     this.paymentService.handleEvent(event);
     return event;
   }

@@ -33,7 +33,7 @@ export class PaymentsService {
     {
       id: '1',
       name: 'Item 1',
-      priceInCents: 10000,
+      priceInCents: 10000, // Stripe requires price to be sent in Cents
     },
     {
       id: '2',
@@ -50,14 +50,15 @@ export class PaymentsService {
     this.stripe = new Stripe(
       configService.get<string>('STRIPE_KEY', 'default_key'),
       {
-        apiVersion: '2022-11-15',
+        apiVersion: '2022-11-15', // todo: check significance for this.
       },
     );
   }
 
   async createCheckoutSessionUrl(cart: TCart, user: User) {
     let payments: Payment[] = [];
-    const lineItems: any[] = cart.map((cartItem) => {
+    // Todo: Stripe.LineItem misses the price_data types. Check once again with stripe docs, then extend the type itself to remove any.
+    const lineItems: any[] = cart.map((cartItem) => { 
       const storeItem = this.storeItems.find((c) => c.id === cartItem.id);
       if (storeItem) {
         // todo: throw error on else
@@ -85,18 +86,20 @@ export class PaymentsService {
     const session = await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      cancel_url: 'http://localhost:3000', // todo: complete this
-      success_url: 'http://localhost:3000', // todo: complete this
+      cancel_url: 'http://localhost:3000', // todo: complete this (redirects to UI)
+      success_url: 'http://localhost:3000', // todo: complete this (redirects to UI)
       line_items: lineItems,
     });
+    // todo: This will be asynchronous using queues. If not then wrap this in transactions
     payments = payments.map(p => ({...p, stipeSessionId: session.id}))
-    payments.forEach((p) => this.paymentRepository.save(p)); // todo: use transaction, bulk update
+    payments.forEach((p) => this.paymentRepository.save(p));
     return session.url;
   }
 
   async handleEvent(event: any) {
     switch (event.type) {
       case 'checkout.session.async_payment_failed':
+        // todo: same as checkout.session.complete , create helper function and pass payment status. 
         console.log('checkout.session.async_payment_failed');
         break;
       case 'checkout.session.async_payment_succeeded':
@@ -109,12 +112,15 @@ export class PaymentsService {
           stipeSessionId: id,
         }})
         payments = payments.map(p => ({...p, status: PAYMENT_STATUS.COMPLETED}));
+        // this will be asynchronous using queues.
         payments.forEach(p => this.paymentRepository.save(p));
         break;
       case 'checkout.session.expired':
         console.log('checkout.session.expired');
+        // this can trigger notifications for user to nudge them to make the payment.
         break;
       default:
+        // also sends alerts to dev team.
         console.log(`Unhandled event type ${event.type}`);
     }
   }

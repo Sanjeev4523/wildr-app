@@ -1,1 +1,66 @@
 host.docker.internal
+docker run --rm -it stripe/stripe-cli listen --forward-to localhost:3000/payments/webhook --api-key sk_test_51M9vUsSB8KdwIjzHwJyQOfoZIs2iDfRXdskjcnsdkcfYDWWf296LeUaRj2lMe3SajndHfpw47XsFxAXC00DVtCJoUB
+
+https://dashboard.stripe.com/test/webhooks/we_1MAGIkSB8KdwIjzHOmOo8SBu
+
+
+
+checkout.session.completed {
+  id: 'cs_test_a1ZrkeEXhbOVLXSUDxkFJRBny3MuXwVc8Rji2atLWsMJ8PLVlvJuy7OHA0',
+  object: 'checkout.session',
+  after_expiration: null,
+  allow_promotion_codes: null,
+  amount_subtotal: 20000,
+  amount_total: 20000,
+  automatic_tax: { enabled: false, status: null },
+  billing_address_collection: null,
+  cancel_url: 'http://localhost:3000',
+  client_reference_id: null,
+  consent: null,
+  consent_collection: null,
+  created: 1669909185,
+  currency: 'inr',
+  custom_text: { shipping_address: null, submit: null },
+  customer: null,
+  customer_creation: 'if_required',
+  customer_details: {
+    address: {
+      city: null,
+      country: 'IN',
+      line1: null,
+      line2: null,
+      postal_code: null,
+      state: null
+    },
+    email: 's@s.com',
+    name: 'Test',
+    phone: null,
+    tax_exempt: 'none',
+    tax_ids: []
+  },
+  customer_email: null,
+  expires_at: 1669995584,
+  livemode: false,
+  locale: null,
+  metadata: {},
+  mode: 'payment',
+  payment_intent: 'pi_3MAEsESB8KdwIjzH0ka81DFA',
+  payment_link: null,
+  payment_method_collection: 'always',
+  payment_method_options: {},
+  payment_method_types: [ 'card' ],
+  payment_status: 'paid',
+  phone_number_collection: { enabled: false },
+  recovered_from: null,
+  setup_intent: null,
+  shipping_address_collection: null,
+  shipping_cost: null,
+  shipping_details: null,
+  shipping_options: [],
+  status: 'complete',
+  submit_type: null,
+  subscription: null,
+  success_url: 'http://localhost:3000',
+  total_details: { amount_discount: 0, amount_shipping: 0, amount_tax: 0 },
+  url: null
+}
