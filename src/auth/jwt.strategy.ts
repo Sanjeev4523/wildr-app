@@ -9,14 +9,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false, // todo: research more...
+      ignoreExpiration: false, // todo: research more docs...
       secretOrKey: jwtConstants.secret,
     });
   }
 
   async validate(payload: any): Promise<TUserProfile> { // todo: this is the decrypted json value from JWT. Add type for this.
     return { email: payload.sub, username: payload.username }; // as User basically
-    // todo: add a db call top enrich the user profile based on userId..
+    // todo: add a db call on top to enrich the user profile based on email..
   }
 
   // todo: Refresh JWT Token functionality

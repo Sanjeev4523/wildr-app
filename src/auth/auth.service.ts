@@ -12,7 +12,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, passwordHash: string): Promise<TUserProfile| null> {
-    // Todo: compare encrypted password.
+    // Todo: compare encrypted password by using bcrypt.
     const user = await this.usersService.findByEmail(email);
     if (user && user.passwordHash === passwordHash) {
       const { passwordHash, ...result } = user;
@@ -34,6 +34,7 @@ export class AuthService {
 
   async register(user: User): Promise<User>{
     const existingUser = await this.usersService.findByEmail(user.email);
+    // todo: if username is unique, check for that as well.
     if(existingUser){
       throw new BadRequestException();
     }
